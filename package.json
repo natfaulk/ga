@@ -1,0 +1,19 @@
+{
+  "name": "ga",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.7.2",
+    "mindrawingjs": "git+https://github.com/natfaulk/mindrawingjs.git",
+    "typeface-roboto": "0.0.54"
+  },
+  "devDependencies": {
+    "electron": "^2.0.5"
+  }
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Gentic Algorithm</title>
+
+    <link rel="stylesheet" type="text/css" href="node_modules/typeface-roboto/index.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+  </head>
+  <body ng-app="myapp" ng-controller="ga">
+    <h1>Genetic Algorithm</h1>
+
+    <canvas id="canvas"></canvas><br>
+    <div>Current gen: {{gen}}</div>
+    <div>Prev gen best fitness: {{prevGenBestFit}}</div>
+    <div>Prev gen average fitness: {{prevGenAvFit}}</div>
+
+    <div ng-repeat="gen in gens">Gen: {{gen.gen}}, Best: {{gen.best}}, Av: {{gen.av}}, Av age: {{gen.avage}}</div>
+
+    <script>require('angular')</script>
+    <script>require('./ga.js')</script>
+  </body>
+</html>
