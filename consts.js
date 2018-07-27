@@ -1,0 +1,10 @@
+module.exports = {
+  MAX_INSTRUCTIONS: 1300,
+  MUTATE_CHANCE: 0.05,
+  MAX_AGE: 1300,
+  SPEED: 1.5,
+  START_X: 400,
+  START_Y: 550,
+  START_VAR: 40,
+  N_CHARS: 100
+}

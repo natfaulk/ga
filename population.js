@@ -1,17 +1,14 @@
 const Char = require('./char')
-const N_CHARS = 100
-const START_X = 400
-const START_Y = 550
-const START_VAR = 40
+const CONSTS = require('./consts')
 
 class Population {
   constructor(_destination) {
     this.destination = _destination
     this.all = []
     
-    for (let i = 0; i < N_CHARS; i++) {
-      let startx = START_X + Math.random() * START_VAR
-      let starty = START_Y + Math.random() * START_VAR
+    for (let i = 0; i < CONSTS.N_CHARS; i++) {
+      let startx = CONSTS.START_X + Math.random() * CONSTS.START_VAR
+      let starty = CONSTS.START_Y + Math.random() * CONSTS.START_VAR
       this.all.push(new Char(this.destination, startx, starty))
     }
   }
@@ -80,8 +77,8 @@ class Population {
   nextGeneration() {
     let all_new = []
     let totalFit = this.getTotalFitness()
-
-    for (let i = 0; i < N_CHARS; i++) {
+    
+    for (let i = 0; i < CONSTS.N_CHARS; i++) {
       let sum = 0
       let rand = Math.random() * totalFit
       for (let j = 0; j < this.all.length; j++) {

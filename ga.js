@@ -1,9 +1,12 @@
 const Mindrawingjs = require('mindrawingjs')
 const Population = require('./population')
 const Point = require('./point')
+const Savefiles = require('./savefiles')
+const CONSTS = require('./consts')
 
 let myApp = angular.module('myapp', [])
 myApp.controller('ga', ['$scope', '$interval', function($s, $interval) {
+  Savefiles.init()
   $s.d = new Mindrawingjs()
   $s.d.setup('canvas', 800, 600)
   $s.d.background('white')
@@ -39,4 +42,11 @@ myApp.controller('ga', ['$scope', '$interval', function($s, $interval) {
     //   $interval.cancel($s.int)
     // }
   }, 1000 / 60)
+
+  $s.saveJSON = () => {
+    Savefiles.nextFile({
+      gens: $s.gens,
+      consts: CONSTS 
+    }, 'save')
+  }
 }])

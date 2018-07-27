@@ -1,11 +1,6 @@
 const Point = require('./point')
 const Brain = require('./brain')
-
-const MAX_AGE = 1300
-const SPEED = 1.5
-const START_X = 400
-const START_Y = 550
-const START_VAR = 40
+const CONSTS = require('./consts')
 
 class Char {
   constructor(_destination, _x = 0, _y = 0) {
@@ -24,8 +19,8 @@ class Char {
       let next = this.brain.getNext()
       // next.x *= SPEED
       // next.y *= SPEED
-      this.vel.x = next.x * SPEED
-      this.vel.y = next.y * SPEED
+      this.vel.x = next.x * CONSTS.SPEED
+      this.vel.y = next.y * CONSTS.SPEED
       this.pos.x += this.vel.x
       this.pos.y += this.vel.y
       this.age++
@@ -34,7 +29,7 @@ class Char {
         this.alive = false
       }
       if (this.pos.x <= 5 || this.pos.y <= 5 || this.pos.x >= 795 || this.pos.y >= 595) this.alive = false
-      if (this.age >= MAX_AGE) this.alive = false
+      if (this.age >= CONSTS.MAX_AGE) this.alive = false
     }
 
   }
@@ -49,8 +44,8 @@ class Char {
   }
 
   static breed(parent) {
-    let startx = START_X + Math.random() * START_VAR
-    let starty = START_Y + Math.random() * START_VAR
+    let startx = CONSTS.START_X + Math.random() * CONSTS.START_VAR
+    let starty = CONSTS.START_Y + Math.random() * CONSTS.START_VAR
     let child = new Char(parent.destination, startx, starty)
     parent.brain.mutate()
     child.brain.dirs = parent.brain.dirs.slice(0)
