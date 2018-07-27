@@ -1,6 +1,6 @@
 module.exports = {
   MAX_INSTRUCTIONS: 1300,
-  MUTATE_CHANCE: 0.01,
+  MUTATE_CHANCE: 0.001,
   MAX_AGE: 1300,
   ACCEL: 1,
   MAX_SPEED: 3,

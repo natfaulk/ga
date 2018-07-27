@@ -16,6 +16,7 @@ myApp.controller('ga', ['$scope', '$interval', function($s, $interval) {
   $s.gen = 1
   $s.prevGenBestFit = 0
   $s.prevGenAvFit = 0
+  $s.prevGenComplete = 0
 
   $s.gens = []
 

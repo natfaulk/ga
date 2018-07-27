@@ -25,20 +25,28 @@ class Population {
       $s.gen++
       $s.prevGenBestFit = 0
       $s.prevGenAvFit = 0
+      $s.prevGenComplete = 0
       let avage = 0
+      let bestage = CONSTS.MAX_AGE + 1
 
       this.all.forEach((element, index, array) => {
         let fit = element.getFitness()
         if (fit > $s.prevGenBestFit) $s.prevGenBestFit = fit
         $s.prevGenAvFit += fit / array.length
         avage += element.age / array.length
+        if (element.complete) {
+          $s.prevGenComplete++
+          if (element.age < bestage) bestage = element.age
+        }
       })
 
       $s.gens.push ({
         av: $s.prevGenAvFit,
         best: $s.prevGenBestFit,
         gen: $s.gen - 1,
-        avage: avage
+        avage: avage,
+        complete: $s.prevGenComplete,
+        bestage: bestage
       })
 
       // next generation

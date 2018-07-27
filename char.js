@@ -2,6 +2,8 @@ const Point = require('./point')
 const Brain = require('./brain')
 const CONSTS = require('./consts')
 
+const COMPLETE_SCALER = 3
+
 class Char {
   constructor(_destination, _x = 0, _y = 0) {
     this.destination = _destination
@@ -40,7 +42,12 @@ class Char {
 
   getFitness() {
     let fit = 0
-    fit = 1 / Math.pow(Point.distance(this.destination, this.pos), 2)
+    if (this.complete) {
+      fit = (1 / this.age) * COMPLETE_SCALER
+    } else {
+      fit = 1 / Math.pow(Point.distance(this.destination, this.pos), 2)
+    }
+
     // if (this.complete) fit = 1
     // else fit = 1 / Math.pow(Point.distance(this.destination, this.pos), 2)// + this.age / 1000000
     // else fit = 600 - Point.distance(this.destination, this.pos)
