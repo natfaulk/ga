@@ -78,7 +78,21 @@ class Population {
     let all_new = []
     let totalFit = this.getTotalFitness()
     
-    for (let i = 0; i < CONSTS.N_CHARS; i++) {
+    // find the best
+    let best = 0
+    let bestIndex = 0
+    this.all.forEach((element, index, array) => {
+      let fit = element.getFitness()
+      if (fit > best) {
+        best = fit
+        bestIndex = index
+      }
+    })
+
+    // keep the best
+    all_new.push(Char.clone(this.all[bestIndex]))
+
+    while (all_new.length < CONSTS.N_CHARS) {
       let sum = 0
       let rand = Math.random() * totalFit
       for (let j = 0; j < this.all.length; j++) {

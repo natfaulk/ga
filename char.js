@@ -8,6 +8,7 @@ class Char {
     this.startpos = new Point(_x, _y)
     this.pos = new Point(_x, _y)
     this.vel = new Point()
+    this.accel = new Point()
     this.brain = new Brain()
     this.alive = true
     this.complete = false
@@ -19,8 +20,11 @@ class Char {
       let next = this.brain.getNext()
       // next.x *= SPEED
       // next.y *= SPEED
-      this.vel.x = next.x * CONSTS.SPEED
-      this.vel.y = next.y * CONSTS.SPEED
+      this.accel.x = next.x * CONSTS.ACCEL
+      this.accel.y = next.y * CONSTS.ACCEL
+      this.vel.x += this.accel.x
+      this.vel.y += this.accel.y
+      if (this.vel.mag() > CONSTS.MAX_SPEED) this.vel.setMag(CONSTS.MAX_SPEED)
       this.pos.x += this.vel.x
       this.pos.y += this.vel.y
       this.age++
@@ -48,6 +52,14 @@ class Char {
     let starty = CONSTS.START_Y + Math.random() * CONSTS.START_VAR
     let child = new Char(parent.destination, startx, starty)
     parent.brain.mutate()
+    child.brain.dirs = parent.brain.dirs.slice(0)
+    return child
+  }
+
+  static clone(parent) {
+    let startx = parent.startpos.x
+    let starty = parent.startpos.y
+    let child = new Char(parent.destination, startx, starty)
     child.brain.dirs = parent.brain.dirs.slice(0)
     return child
   }

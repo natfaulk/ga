@@ -4,6 +4,8 @@ const Point = require('./point')
 const Savefiles = require('./savefiles')
 const CONSTS = require('./consts')
 
+const FRAME_RATE = 180
+
 let myApp = angular.module('myapp', [])
 myApp.controller('ga', ['$scope', '$interval', function($s, $interval) {
   Savefiles.init()
@@ -41,12 +43,12 @@ myApp.controller('ga', ['$scope', '$interval', function($s, $interval) {
     // if (pop.getAlive().length == 0) {
     //   $interval.cancel($s.int)
     // }
-  }, 1000 / 60)
+  }, 1000 / FRAME_RATE)
 
   $s.saveJSON = () => {
     Savefiles.nextFile({
       gens: $s.gens,
       consts: CONSTS 
-    }, 'save')
+    }, 'accel')
   }
 }])
