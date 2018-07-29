@@ -1,8 +1,10 @@
 const Point = require('./point')
 const Brain = require('./brain')
 const CONSTS = require('./consts')
+const Walls = require('./walls')
 
 const COMPLETE_SCALER = 3
+const DIED_DIST_AGE_SPLIT = 0.7
 
 class Char {
   constructor(_destination, _x = 0, _y = 0) {
@@ -20,8 +22,6 @@ class Char {
   update() {
     if (this.alive && !this.complete) {
       let next = this.brain.getNext()
-      // next.x *= SPEED
-      // next.y *= SPEED
       this.accel.x = next.x * CONSTS.ACCEL
       this.accel.y = next.y * CONSTS.ACCEL
       this.vel.x += this.accel.x
@@ -35,9 +35,9 @@ class Char {
         this.alive = false
       }
       if (this.pos.x <= 5 || this.pos.y <= 5 || this.pos.x >= 795 || this.pos.y >= 595) this.alive = false
+      if (Walls.collided(this.pos)) this.alive = false
       if (this.age >= CONSTS.MAX_AGE) this.alive = false
     }
-
   }
 
   getFitness() {
@@ -45,7 +45,8 @@ class Char {
     if (this.complete) {
       fit = (1 / this.age) * COMPLETE_SCALER
     } else {
-      fit = 1 / Math.pow(Point.distance(this.destination, this.pos), 2)
+      fit = (1 / Math.pow(Point.distance(this.destination, this.pos), 2)) * DIED_DIST_AGE_SPLIT
+      fit += (this.age / 650000) * (1 - DIED_DIST_AGE_SPLIT)
     }
 
     // if (this.complete) fit = 1
