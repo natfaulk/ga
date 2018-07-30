@@ -4,7 +4,7 @@ const CONSTS = require('./consts')
 const Walls = require('./walls')
 
 const COMPLETE_SCALER = 3
-const DIED_DIST_AGE_SPLIT = 0.7
+const DIED_DIST_AGE_SPLIT = 0.9
 
 class Char {
   constructor(_destination, _x = 0, _y = 0) {
@@ -46,7 +46,7 @@ class Char {
       fit = (1 / this.age) * COMPLETE_SCALER
     } else {
       fit = (1 / Math.pow(Point.distance(this.destination, this.pos), 2)) * DIED_DIST_AGE_SPLIT
-      fit += (this.age / 650000) * (1 - DIED_DIST_AGE_SPLIT)
+      fit += (this.age / 1000000) * (1 - DIED_DIST_AGE_SPLIT)
     }
 
     // if (this.complete) fit = 1
