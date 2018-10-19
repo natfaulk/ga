@@ -2,13 +2,14 @@ const Point = require('./point')
 const Brain = require('./brain')
 const CONSTS = require('./consts')
 const Walls = require('./walls')
+const Eye = require('./eye')
 
 const COMPLETE_SCALER = 3
 const DIED_DIST_AGE_SPLIT = 0.9
 
 class Char {
-  constructor(_destination, _x = 0, _y = 0) {
-    this.destination = _destination
+  constructor(_x = 0, _y = 0) {
+    this.destination = CONSTS.DESTINATION
     this.startpos = new Point(_x, _y)
     this.pos = new Point(_x, _y)
     this.vel = new Point()
@@ -17,6 +18,9 @@ class Char {
     this.alive = true
     this.complete = false
     this.age = 0
+    this.eye = new Eye(this)
+    // this.eye.angle = 0
+    // this.eye.dist = 20
   }
 
   update() {
@@ -30,7 +34,7 @@ class Char {
       this.pos.x += this.vel.x
       this.pos.y += this.vel.y
       this.age++
-      if (Point.distance(this.pos, this.destination) <= 25) {
+      if (Point.distance(this.pos, this.destination) <= this.destination.width) {
         this.complete = true
         this.alive = false
       }
@@ -46,7 +50,7 @@ class Char {
       fit = (1 / this.age) * COMPLETE_SCALER
     } else {
       fit = (1 / Math.pow(Point.distance(this.destination, this.pos), 2)) * DIED_DIST_AGE_SPLIT
-      fit += (this.age / 1000000) * (1 - DIED_DIST_AGE_SPLIT)
+      fit += (this.age / 5000000) * (1 - DIED_DIST_AGE_SPLIT)
     }
 
     // if (this.complete) fit = 1
@@ -55,10 +59,18 @@ class Char {
     return fit
   }
 
+  draw(_d, _drawEyes) {
+    if (this.alive) _d.stroke('green')
+    else _d.stroke('red')
+    _d.fill('white')
+    _d.ellipse(this.pos.x, this.pos.y, 5)
+    if (_drawEyes) this.eye.draw(_d)
+  }
+
   static breed(parent) {
     let startx = CONSTS.START_X + Math.random() * CONSTS.START_VAR
     let starty = CONSTS.START_Y + Math.random() * CONSTS.START_VAR
-    let child = new Char(parent.destination, startx, starty)
+    let child = new Char(startx, starty)
     parent.brain.mutate()
     child.brain.dirs = parent.brain.dirs.slice(0)
     return child
@@ -67,7 +79,7 @@ class Char {
   static clone(parent) {
     let startx = parent.startpos.x
     let starty = parent.startpos.y
-    let child = new Char(parent.destination, startx, starty)
+    let child = new Char(startx, starty)
     child.brain.dirs = parent.brain.dirs.slice(0)
     return child
   }

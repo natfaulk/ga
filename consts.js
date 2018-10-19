@@ -7,5 +7,10 @@ module.exports = {
   START_X: 400,
   START_Y: 550,
   START_VAR: 20,
-  N_CHARS: 250
+  N_CHARS: 250,
+  DESTINATION: {
+    x: 400,
+    y: 50,
+    width: 25
+  }
 }

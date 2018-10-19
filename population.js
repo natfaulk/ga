@@ -9,7 +9,7 @@ class Population {
     for (let i = 0; i < CONSTS.N_CHARS; i++) {
       let startx = CONSTS.START_X + Math.random() * CONSTS.START_VAR
       let starty = CONSTS.START_Y + Math.random() * CONSTS.START_VAR
-      this.all.push(new Char(this.destination, startx, starty))
+      this.all.push(new Char(startx, starty))
     }
   }
 

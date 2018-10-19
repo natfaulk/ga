@@ -14,6 +14,11 @@ class Point {
     this.y *= scaleFactor
   }
 
+  setFromPolar(_angle, _mag) {
+    this.x = _mag * Math.cos(_angle)
+    this.y = _mag * Math.sin(_angle)
+  }
+
   static distance(a, b) {
     const dx = a.x - b.x
     const dy = a.y - b.y
@@ -24,6 +29,7 @@ class Point {
   static angle(a, b) {
     return Math.atan2(a.y - b.y, a.x - b.x)
   }
+
 }
 
 module.exports = Point
