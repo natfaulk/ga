@@ -11,6 +11,8 @@
     <h1>Genetic Algorithm</h1>
 
     <canvas id="canvas"></canvas><br>
+    <div ng-hide="pause"><Button ng-click="pause=true">Pause</Button></div>
+    <div ng-show="pause"><Button ng-click="pause=false">Play</Button></div>
     <div><button ng-click="saveJSON()">Save JSON</button></div>
     <div>Current gen: {{gen}}</div>
     <div>Prev gen best fitness: {{prevGenBestFit}}</div>

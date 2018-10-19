@@ -21,6 +21,7 @@ myApp.controller('ga', ['$scope', '$interval', function($s, $interval) {
   $s.prevGenBestFit = 0
   $s.prevGenAvFit = 0
   $s.prevGenComplete = 0
+  $s.pause = false
 
   $s.gens = []
 
@@ -28,29 +29,27 @@ myApp.controller('ga', ['$scope', '$interval', function($s, $interval) {
   let pop = new Population(destination)
 
   $s.int = $interval(() => {
-    pop.update($s)
-    $s.d.background('white')    
-
-    // draw destination
-    $s.d.stroke('blue')
-    $s.d.ellipse(destination.x, destination.y, 55)
-
-    Walls.draw($s.d)
-    
-    $s.d.stroke('green')
-    $s.d.fill('white')
-    pop.getAlive().forEach(element => {
-      $s.d.ellipse(element.pos.x, element.pos.y, 5)
-    })
-
-    $s.d.stroke('red')
-    pop.getDead().forEach(element => {
-      $s.d.ellipse(element.pos.x, element.pos.y, 5)
-    })
-
-    // if (pop.getAlive().length == 0) {
-    //   $interval.cancel($s.int)
-    // }
+    if (!$s.pause) {
+      pop.update($s)
+      $s.d.background('white')    
+  
+      // draw destination
+      $s.d.stroke('blue')
+      $s.d.ellipse(destination.x, destination.y, 55)
+  
+      Walls.draw($s.d)
+      
+      $s.d.stroke('green')
+      $s.d.fill('white')
+      pop.getAlive().forEach(element => {
+        $s.d.ellipse(element.pos.x, element.pos.y, 5)
+      })
+  
+      $s.d.stroke('red')
+      pop.getDead().forEach(element => {
+        $s.d.ellipse(element.pos.x, element.pos.y, 5)
+      })
+    }
   }, 1000 / FRAME_RATE)
 
   $s.saveJSON = () => {
