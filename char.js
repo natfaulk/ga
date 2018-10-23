@@ -1,5 +1,5 @@
 const Point = require('./point')
-const Brain = require('./brain')
+const Brain = require('./brain2')
 const CONSTS = require('./consts')
 const Walls = require('./walls')
 const Eye = require('./eye')
@@ -14,7 +14,7 @@ class Char {
     this.pos = new Point(_x, _y)
     this.vel = new Point()
     this.accel = new Point()
-    this.brain = new Brain()
+    this.brain = new Brain(this)
     this.alive = true
     this.complete = false
     this.age = 0
@@ -67,12 +67,22 @@ class Char {
     if (_drawEyes) this.eye.draw(_d)
   }
 
+  getXpos() {
+    return this.pos.x
+  }
+
+  getYpos() {
+    return this.pos.y
+  }
+
   static breed(parent) {
     let startx = CONSTS.START_X + Math.random() * CONSTS.START_VAR
     let starty = CONSTS.START_Y + Math.random() * CONSTS.START_VAR
     let child = new Char(startx, starty)
     parent.brain.mutate()
-    child.brain.dirs = parent.brain.dirs.slice(0)
+    // child.brain.dirs = parent.brain.dirs.slice(0)
+    // child.brain = parent.brain
+    child.brain.loadWeights(parent.brain.saveWeights())
     return child
   }
 
@@ -80,7 +90,14 @@ class Char {
     let startx = parent.startpos.x
     let starty = parent.startpos.y
     let child = new Char(startx, starty)
-    child.brain.dirs = parent.brain.dirs.slice(0)
+    // child.brain.dirs = parent.brain.dirs.slice(0)
+    // child.brain = parent.brain
+    let parentw = parent.brain.saveWeights()
+    child.brain.loadWeights(parent.brain.saveWeights())
+    console.log(parentw)
+    console.log(child.brain.saveWeights())
+    console.log(parent)
+    console.log(child)
     return child
   }
 }
