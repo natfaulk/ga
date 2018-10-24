@@ -5,7 +5,7 @@ const Walls = require('./walls')
 const Eye = require('./eye')
 
 const COMPLETE_SCALER = 3
-const DIED_DIST_AGE_SPLIT = 0.9
+const DIED_DIST_AGE_SPLIT = 0.95
 
 class Char {
   constructor(_x = 0, _y = 0) {
@@ -33,6 +33,8 @@ class Char {
       if (this.vel.mag() > CONSTS.MAX_SPEED) this.vel.setMag(CONSTS.MAX_SPEED)
       this.pos.x += this.vel.x
       this.pos.y += this.vel.y
+      this.eye.angle = next.eyeAngle
+      this.eye.dist = next.eyeLength
       this.age++
       if (Point.distance(this.pos, this.destination) <= this.destination.width) {
         this.complete = true
@@ -73,6 +75,13 @@ class Char {
 
   getYpos() {
     return this.pos.y
+  }
+
+  getEye() {
+    let look = this.eye.look()
+    if (look == 'wall') return 1
+    else if (look == 'destination') return 2
+    else return 3
   }
 
   static breed(parent) {
